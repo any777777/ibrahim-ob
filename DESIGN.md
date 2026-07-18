@@ -1,86 +1,50 @@
-<!-- SEED: re-run $impeccable document once there's code to capture the actual tokens and components. -->
----
-name: Ibrahim Obaidat Portfolio
-description: معرض أعمال شخصي يبيع موقعاً جاهزاً ومُداراً بالكامل بثقة وسرعة ومرونة.
----
+# Ibrahim Obaidat Portfolio — Design System
 
-# Design System: Ibrahim Obaidat Portfolio
+## Direction
 
-## 1. Overview
+The interface follows a “pressed graphite” art direction: quiet, tactile, confident, and work-first. It uses the supplied compressed-paper texture as a real background asset, mineral-white typography, and one restrained patina-teal accent. Decorative gradients and generic SaaS styling are intentionally excluded.
 
-**Creative North Star: "طبعة الرصاص المضغوط — Pressed Graphite Imprint"**
+## Typography
 
-يبدو النظام كمعرض هادئ بُني من رصاص وورق مضغوط: كتلة واثقة، ملمس يمكن الإحساس به، ومساحات مضيئة تكشف الأعمال بوضوح. الفخامة هنا ليست ذهباً أو زخرفة؛ هي دقة الحركة، صرامة التكوين، جودة الطباعة، والقدرة على ترك المشروع الحقيقي يتصدر المشهد.
+- Arabic: Tajawal (`300`, `400`, `500`, `700`)
+- English editorial display: Crimson Text (`400`, `600`)
+- Arabic is the primary design language; English mirrors the hierarchy without imitating Arabic letterforms.
 
-الحركة مصممة كجزء من المادة. تنضغط الطبقات وتنفصل، تتقدم بطاقة المشروع نحو الزائر، وتتحول من ملخص إلى نافذة تصفح. يستلهم النظام من Paxel مبدأ انتقال العنصر المختار إلى المقدمة، ومن Claude الثقة الهادئة والتجريد المنضبط، لكنه يرفض ألوانهما وهويتهما الخاصة. على الهاتف تتحول الحركة إلى سحب ولمس واضحين دون فقدان السياق.
+## Color tokens
 
-**Key Characteristics:**
+- Graphite 950: `#111313`
+- Graphite 900: `#171919`
+- Graphite 800: `#202222`
+- Graphite 650: `#474949`
+- Mineral white: `#e7e6e1`
+- Pencil trace: `#a9aaa6`
+- Patina teal: `#4c9f97`
+- Bright patina: `#59b7ae`
 
-- رصاصي مادي عميق، وليس خلفية رمادية مسطحة.
-- مشروع واحد يقود الانتباه في كل لحظة.
-- حركة منحوتة ومقصودة، لا مؤثرات دخول متكررة.
-- طباعة عربية صاحبة شخصية كاملة، والإنجليزية شريك متوازن لها.
-- لون علامي واحد نادر يكسر الحياد دون صخب.
+Patina teal is reserved for selected states, key navigation cues, price emphasis, and WhatsApp conversion actions. No additional decorative colors are introduced.
 
-## 2. Colors
+## Material and depth
 
-استراتيجية لونية مقيدة وملتزمة: عائلة رصاصية كاملة تحمل معظم السطح، أبيض معدني للنص والضوء، ولمعة واحدة من أخضر أكسدة النحاس الهادئ تظهر فقط حيث يجب توجيه القرار. القيم النهائية ستُحسم أثناء التنفيذ بصيغة OKLCH بعد اختبار التباين على الشاشات الفعلية.
+- Base material: `/public/compressed-graphite.png`
+- A dark translucent veil preserves text contrast without hiding the paper texture.
+- Borders are hairline graphite/mineral-white mixtures.
+- Corners remain nearly square; depth comes from stacked project sheets and hard, restrained shadows.
 
-### Primary
+## Layout and interaction
 
-- **أكسدة النحاس الهادئة — Weathered Patina Teal** (`[to be resolved during implementation]`): اللون العلامي الوحيد. يستخدم في حالات الاختيار، مؤشرات التقدم، التركيز، واللحظات التي تقود إلى واتساب. لا يتحول إلى خلفية عامة ولا ينافس صور المشاريع.
+- Desktop: physical left/right composition matching the supplied reference—project stack on the left, value proposition on the right, services and estimator immediately below.
+- Mobile: copy leads, CTAs remain full-width and thumb-friendly, and the portfolio becomes a horizontally browsable strip.
+- Selecting a project brings its real screenshot to the front with weighted, purposeful movement.
+- The Arabic/English switch changes both language and document direction.
+- The estimator exposes project type, pages, languages, motion, hosting/domain, and full management, then prepares an honest WhatsApp brief.
 
-### Neutral
+## Motion
 
-- **رصاص مضغوط — Pressed Graphite** (`[to be resolved during implementation]`): الخلفية الأساسية ذات العمق المادي.
-- **صفيحة رصاص — Graphite Plate** (`[to be resolved during implementation]`): أسطح البطاقات والمعاينات، أفتح أو أغمق بدرجة بنيوية واضحة عن الخلفية.
-- **أبيض معدني — Mineral White** (`[to be resolved during implementation]`): النص الأساسي ومساحات الضوء الضرورية.
-- **رماد أثر القلم — Pencil Trace** (`[to be resolved during implementation]`): النص الثانوي والفواصل، مع تباين مقروء لا يقل عن المتطلبات المعتمدة.
+Motion is limited to meaningful state changes: project selection, selected controls, and compact hover/focus feedback. All motion is removed or shortened under `prefers-reduced-motion`.
 
-**The One Patina Rule.** اللون غير المحايد يظهر بوظيفة واحدة واضحة وفي أقل من 10% من أي شاشة. إذا ظهر لون ثانٍ للزينة فقد فشل النظام.
+## Guardrails
 
-**The No Gradient Rule.** التدرجات الزخرفية ممنوعة. العمق يأتي من الضوء، الملمس، تراكب المواد، وحركة العناصر.
-
-## 3. Typography
-
-**Display Font:** `[Arabic-first display family to be chosen at implementation]`
-**Body Font:** `[Arabic/Latin text family to be chosen at implementation]`
-
-**Character:** العناوين ثابتة، ذات حضور ومصداقية، وفيها فخامة ناتجة عن النسب والفراغ لا عن الزخرفة. النصوص التوضيحية مباشرة وإنسانية كي لا يتحول الموقع إلى بيان فني غامض. يُختار الزوج الطباعي من كتالوج حقيقي بعد اختبار شكل الاسم «إبراهيم عبيدات» والجمل البيعية بالعربية، ثم تُختار الإنجليزية لمعادلة الوزن والإيقاع لا لتقليد الحروف العربية.
-
-### Hierarchy
-
-- **Display** (`[to be resolved during implementation]`): الوعد الرئيسي واسم المشروع المختار؛ سطران كحد عملي مع توازن واضح في RTL وLTR.
-- **Headline** (`[to be resolved during implementation]`): عناوين الخدمات والحاسبة والأعمال.
-- **Title** (`[to be resolved during implementation]`): أسماء المشاريع والباقات.
-- **Body** (`[to be resolved during implementation]`): شرح مختصر وواضح، بطول سطر مريح وحد أقصى بين 65 و75 حرفاً تقريباً.
-- **Label** (`[to be resolved during implementation]`): الأسعار، نوع المشروع، وحالات التفاعل؛ لا يستخدم الحروف الكبيرة المتباعدة كقالب متكرر.
-
-**The Arabic Leads Rule.** لا يُعتمد أي خط لأن نسخته اللاتينية جميلة فقط. يجب أن تنجح العربية أولاً في الاسم، العنوان الطويل، الأرقام والأسعار، ثم تُوازن الإنجليزية معها.
-
-## 4. Elevation
-
-النظام مسطح وملموس في حالة السكون، وطبقي عند التفاعل. لا تستخدم الظلال الناعمة العامة لصنع بطاقات عائمة. العمق يظهر عندما يُختار مشروع: تنفصل البطاقة عن الرصة، يتغير احتجاب العناصر خلفها، وتصبح المعاينة سطحاً وظيفياً واضحاً. ملمس الورق المضغوط ينفذ كأصل مرئي عالي الجودة أو مادة Canvas/WebGL مضبوطة، وليس كمرشح ضجيج عام أو `feTurbulence`.
-
-**The Earned Lift Rule.** لا يرتفع عنصر إلا إذا تغيرت أولويته أو أصبح قابلاً للتفاعل. الارتفاع الزخرفي الدائم ممنوع.
-
-**The Motion Has Weight Rule.** الحركة تستجيب كما لو أن العناصر صفائح رقيقة فوق بعضها: تسارع قصير، تباطؤ حاسم، بلا ارتداد أو مرونة كرتونية، مع بديل ساكن عند تفضيل تقليل الحركة.
-
-## 6. Do's and Don'ts
-
-### Do:
-
-- **Do** اجعل المشروع الحقيقي والصورة أو المعاينة الحية أكبر دليل على الجودة.
-- **Do** استخدم الرصاصي كعائلة مادية متعددة الطبقات، لا كقيمة رمادية واحدة تملأ الشاشة.
-- **Do** صمم انتقالاً رئيسياً واحداً متقناً للمعرض، ثم اجعل بقية الحركة تخدمه.
-- **Do** اختبر كل تفاعل باللمس على هاتف ضيق قبل اعتماد سلوك الحاسوب.
-- **Do** حافظ على نص عربي واضح ومباشر يبيع النتيجة لا المصطلحات التقنية.
-
-### Don't:
-
-- **Don't** تستخدم «تدرجات لونية زخرفية، قوالب SaaS المتكررة، بطاقات متطابقة، وزخارف بلا وظيفة»؛ هذه هي لغة المواقع التي تبدو مولّدة بالذكاء الاصطناعي.
-- **Don't** تحول البورتفوليو إلى «مظهر تقني برمجي قائم على التيرمينال أو الشيفرة أو اللغة الموجهة للمطورين».
-- **Don't** تجمع الأصفر والأحمر والبرتقالي والأخضر أو أي طيف صاخب؛ لون علامي واحد يكفي.
-- **Don't** تنسخ بيج Claude أو أحادية Paxel أو هويتهما الطباعية؛ الاستلهام سلوكي وإيقاعي فقط.
-- **Don't** تستخدم حركة ثقيلة تعيق التصفح، أو مؤثر دخول متماثلاً لكل قسم، أو تأثير تحويم بلا مقابل واضح على الهاتف.
-- **Don't** تستخدم ملمس ورق جاهزاً يغطي القراءة أو ضجيجاً رقمياً يجعل الخلفية متسخة.
+- No gradients, terminal/code motifs, glassmorphism, decorative blobs, emoji icons, or multicolor palettes.
+- Use real project screenshots and Phosphor icons.
+- Keep Arabic legible and dominant at every breakpoint.
+- The site must remain usable by non-technical Jordanian business owners and keep WhatsApp as the primary conversion path.

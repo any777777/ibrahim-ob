@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Alexandria } from "next/font/google";
+import { Crimson_Text, Tajawal } from "next/font/google";
 import "./globals.css";
 
-const alexandria = Alexandria({
-  variable: "--font-alexandria",
+const tajawal = Tajawal({
+  variable: "--font-tajawal",
   subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
+
+const crimsonText = Crimson_Text({
+  variable: "--font-crimson",
+  subsets: ["latin"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -30,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={alexandria.variable}>
+    <html lang="ar" dir="rtl" className={`${tajawal.variable} ${crimsonText.variable}`}>
       <body>{children}</body>
     </html>
   );

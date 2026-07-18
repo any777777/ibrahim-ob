@@ -1,29 +1,30 @@
 "use client";
 
 import {
-  ArrowDownLeft,
-  ArrowDownRight,
+  ArrowLeft,
+  ArrowRight,
   ArrowUpLeft,
   ArrowUpRight,
-  ChevronDown,
-  Globe2,
-  Headphones,
-  MessageCircle,
-  PenTool,
-  Settings2,
-} from "lucide-react";
+  CloudArrowUp,
+  Code,
+  Headset,
+  PaintBrush,
+  ShieldCheck,
+  SlidersHorizontal,
+  WhatsappLogo,
+} from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { copy, PHONE_DISPLAY, WHATSAPP_NUMBER, type Locale } from "@/data/portfolio";
 import { PriceEstimator } from "@/components/price-estimator";
 import { ProjectShowcase } from "@/components/project-showcase";
+import { copy, PHONE_DISPLAY, WHATSAPP_NUMBER, type Locale } from "@/data/portfolio";
 
-const serviceIcons = [PenTool, Globe2, Settings2, Headphones];
+const serviceIcons = [Code, PaintBrush, SlidersHorizontal, CloudArrowUp, ShieldCheck, Headset];
 
 export function PortfolioPage() {
   const [locale, setLocale] = useState<Locale>("ar");
   const text = copy[locale];
   const isArabic = locale === "ar";
-  const DownArrow = isArabic ? ArrowDownLeft : ArrowDownRight;
+  const WorkArrow = isArabic ? ArrowLeft : ArrowRight;
   const UpArrow = isArabic ? ArrowUpLeft : ArrowUpRight;
 
   useEffect(() => {
@@ -37,36 +38,33 @@ export function PortfolioPage() {
       : "Hi Ibrahim, I have a website idea and would like to discuss it with you.",
   );
 
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`;
+
   return (
     <div className="portfolio-page" dir={isArabic ? "rtl" : "ltr"}>
       <a href="#main-content" className="skip-link">{isArabic ? "انتقل إلى المحتوى" : "Skip to content"}</a>
 
       <header className="site-header">
         <a href="#top" className="brand" aria-label={isArabic ? "إبراهيم عبيدات، الرئيسية" : "Ibrahim Obaidat, home"}>
-          <span>إبراهيم عبيدات</span>
-          <small>Ibrahim Obaidat</small>
+          <span>{isArabic ? "إبراهيم عبيدات" : "Ibrahim Obaidat"}</span>
+          <small>{isArabic ? "مصمم ومطور مواقع مستقل" : "Independent web designer & developer"}</small>
         </a>
 
         <nav aria-label={isArabic ? "التنقل الرئيسي" : "Primary navigation"}>
+          <a className="is-active" href="#top">{text.nav.home}</a>
           <a href="#work">{text.nav.work}</a>
           <a href="#services">{text.nav.services}</a>
           <a href="#pricing">{text.nav.pricing}</a>
           <a href="#about">{text.nav.about}</a>
+          <a href="#contact">{text.nav.contact}</a>
         </nav>
 
         <div className="header-actions">
-          <button
-            type="button"
-            className="language-toggle"
-            onClick={() => setLocale(isArabic ? "en" : "ar")}
-            aria-label={isArabic ? "Switch to English" : "التبديل إلى العربية"}
-          >
-            <span className={isArabic ? "is-active" : ""}>ع</span>
-            <i />
-            <span className={!isArabic ? "is-active" : ""}>EN</span>
+          <button type="button" className="language-toggle" onClick={() => setLocale(isArabic ? "en" : "ar")} aria-label={isArabic ? "Switch to English" : "التبديل إلى العربية"}>
+            <span className={isArabic ? "is-active" : ""}>عربي</span><i /><span className={!isArabic ? "is-active" : ""}>EN</span>
           </button>
-          <a className="header-whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`} target="_blank" rel="noreferrer">
-            <MessageCircle aria-hidden="true" />
+          <a className="header-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer">
+            <WhatsappLogo aria-hidden="true" weight="regular" />
             <span>{text.whatsapp}</span>
           </a>
         </div>
@@ -74,22 +72,6 @@ export function PortfolioPage() {
 
       <main id="main-content">
         <section id="top" className="hero-section" aria-labelledby="hero-heading">
-          <div className="hero-copy">
-            <p className="availability"><span />{text.availability}</p>
-            <h1 id="hero-heading">{text.heroTitle}</h1>
-            <p className="hero-lead">{text.heroBody}</p>
-            <div className="hero-actions">
-              <a className="button button--accent" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`} target="_blank" rel="noreferrer">
-                <MessageCircle aria-hidden="true" />
-                {text.whatsapp}
-              </a>
-              <a className="button button--quiet" href="#work">
-                {text.seeWork}
-                <DownArrow aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
           <ProjectShowcase
             locale={locale}
             labels={{
@@ -101,31 +83,44 @@ export function PortfolioPage() {
             }}
           />
 
-          <a href="#services" className="scroll-cue" aria-label={text.nav.services}>
-            <span>{isArabic ? "مرر لتعرف كيف أعمل" : "Scroll to see how it works"}</span>
-            <ChevronDown aria-hidden="true" />
-          </a>
-        </section>
-
-        <section id="services" className="service-section" aria-labelledby="service-heading">
-          <div className="section-intro">
-            <h2 id="service-heading">{text.serviceTitle}</h2>
-            <p>{text.serviceBody}</p>
-          </div>
-
-          <div className="service-list">
-            {text.services.map(([title, description], index) => {
-              const Icon = serviceIcons[index];
-              return (
-                <article key={title}>
-                  <Icon aria-hidden="true" />
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </article>
-              );
-            })}
+          <div className="hero-copy">
+            <h1 id="hero-heading">{text.heroTitle}</h1>
+            <p>{text.heroBody}</p>
+            <div className="hero-actions">
+              <a className="button button--accent" href={whatsappUrl} target="_blank" rel="noreferrer">
+                <WhatsappLogo aria-hidden="true" weight="regular" />
+                {text.whatsapp}
+              </a>
+              <a className="button button--quiet" href="#work">
+                {text.seeWork}
+                <WorkArrow aria-hidden="true" weight="light" />
+              </a>
+            </div>
           </div>
         </section>
+
+        <div className="service-pricing-band">
+          <section id="services" className="service-section" aria-labelledby="service-heading">
+            <div className="section-intro">
+              <h2 id="service-heading">{text.serviceTitle}</h2>
+              <p>{text.serviceBody}</p>
+            </div>
+            <div className="service-list">
+              {text.services.map(([title, description], index) => {
+                const Icon = serviceIcons[index];
+                return (
+                  <article key={title}>
+                    <Icon aria-hidden="true" weight="light" />
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <PriceEstimator locale={locale} text={text} />
+        </div>
 
         <section className="process-section" aria-labelledby="process-heading">
           <div className="process-intro">
@@ -142,8 +137,6 @@ export function PortfolioPage() {
           </ol>
         </section>
 
-        <PriceEstimator locale={locale} text={text} />
-
         <section id="about" className="about-section" aria-labelledby="about-heading">
           <div className="about-mark" aria-hidden="true">إ</div>
           <div>
@@ -157,15 +150,12 @@ export function PortfolioPage() {
           </dl>
         </section>
 
-        <section className="final-cta" aria-labelledby="final-heading">
-          <div>
-            <h2 id="final-heading">{text.finalTitle}</h2>
-            <p>{text.finalBody}</p>
-          </div>
-          <a className="button button--light" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`} target="_blank" rel="noreferrer">
-            <MessageCircle aria-hidden="true" />
+        <section id="contact" className="final-cta" aria-labelledby="final-heading">
+          <div><h2 id="final-heading">{text.finalTitle}</h2><p>{text.finalBody}</p></div>
+          <a className="button button--light" href={whatsappUrl} target="_blank" rel="noreferrer">
+            <WhatsappLogo aria-hidden="true" weight="regular" />
             {text.whatsapp}
-            <UpArrow aria-hidden="true" />
+            <UpArrow aria-hidden="true" weight="light" />
           </a>
         </section>
       </main>
@@ -173,7 +163,7 @@ export function PortfolioPage() {
       <footer>
         <a href="#top" className="footer-brand">Ibrahim Obaidat</a>
         <p>{text.footer}</p>
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`} target="_blank" rel="noreferrer">WhatsApp · {PHONE_DISPLAY}</a>
+        <a href={whatsappUrl} target="_blank" rel="noreferrer">WhatsApp · {PHONE_DISPLAY}</a>
       </footer>
     </div>
   );

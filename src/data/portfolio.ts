@@ -98,13 +98,12 @@ export const projects: Project[] = [
 
 export const copy = {
   ar: {
-    nav: { work: "الأعمال", services: "الخدمة", pricing: "الأسعار", about: "عني" },
+    nav: { home: "الرئيسية", work: "أعمالي", services: "الخدمات", pricing: "الأسعار", about: "عني", contact: "تواصل" },
     language: "English",
     whatsapp: "تواصل عبر واتساب",
     availability: "أستقبل مشاريع جديدة في الأردن",
     heroTitle: "موقعك، جاهز من الفكرة إلى التشغيل.",
-    heroBody:
-      "أصمم موقعك، أستضيفه، أربطه بنطاقك، وأديره عنك بالكامل. أنت تطلب النتيجة—وأنا أتولى كل ما وراءها.",
+    heroBody: "أصمم وأطور مواقع احترافية سريعة وآمنة، مع استضافة وإدارة كاملة.",
     seeWork: "شاهد الأعمال",
     estimate: "احسب تكلفة موقعك",
     selectedWork: "العمل المختار",
@@ -112,14 +111,15 @@ export const copy = {
     visitProject: "افتح الموقع",
     nextProject: "العمل التالي",
     previousProject: "العمل السابق",
-    serviceTitle: "خدمة متكاملة لموقعك، من شخص واحد.",
-    serviceBody:
-      "لا تحتاج إلى مطور واستضافة وشخص للصيانة كلٌ على حدة. تحصل على مسار واحد واضح ومسؤول واحد عن النتيجة.",
+    serviceTitle: "خدمة متكاملة لموقعك",
+    serviceBody: "أرافقك في كل خطوة، من الفكرة إلى ما بعد الإطلاق.",
     services: [
-      ["تصميم مخصص", "واجهة تناسب نشاطك وشخصية زبونك."],
-      ["استضافة ونطاق", "تشغيل سريع وربط كامل داخل الأردن وخارجه."],
-      ["إدارة مستمرة", "تحديثات ونسخ احتياطي وصيانة عند الحاجة."],
-      ["دعم مباشر", "تتواصل معي مباشرة دون طبقات أو تذاكر معقدة."],
+      ["تطوير محلي احترافي", "بنية سريعة ومهيأة لنشاطك."],
+      ["تصميم وتجربة مخصصة", "واجهة تعكس هوية مشروعك."],
+      ["إدارة ونسخ احتياطي", "متابعة مستمرة دون تدخل منك."],
+      ["استضافة سريعة", "أداء ثابت داخل الأردن وخارجه."],
+      ["أمان وتحديثات دورية", "حماية وصيانة على مدار السنة."],
+      ["دعم فني مستمر", "تواصل مباشر كلما احتجت."],
     ],
     processTitle: "من طلب بسيط إلى موقع يعمل.",
     processBody: "أحتاج منك فكرة المشروع ومحتواه الأساسي. بعد ذلك تصبح التفاصيل التقنية مسؤوليتي.",
@@ -159,13 +159,12 @@ export const copy = {
     footer: "تصميم، تطوير، استضافة وإدارة من الأردن.",
   },
   en: {
-    nav: { work: "Work", services: "Service", pricing: "Pricing", about: "About" },
+    nav: { home: "Home", work: "Work", services: "Services", pricing: "Pricing", about: "About", contact: "Contact" },
     language: "العربية",
     whatsapp: "Chat on WhatsApp",
     availability: "Available for new projects in Jordan",
     heroTitle: "Your website, ready from idea to launch.",
-    heroBody:
-      "I design, host, connect, and manage your website end to end. You ask for the outcome—I handle everything behind it.",
+    heroBody: "I design and build professional, fast, and secure websites with complete hosting and management.",
     seeWork: "View selected work",
     estimate: "Estimate your website",
     selectedWork: "Selected work",
@@ -173,14 +172,15 @@ export const copy = {
     visitProject: "Open website",
     nextProject: "Next project",
     previousProject: "Previous project",
-    serviceTitle: "One complete website service. One person accountable.",
-    serviceBody:
-      "You do not need separate people for design, hosting, and maintenance. You get one clear path and one owner for the result.",
+    serviceTitle: "A complete service for your website",
+    serviceBody: "I stay with you through every step, from the first idea to after launch.",
     services: [
-      ["Custom design", "A website shaped around your business and customer."],
-      ["Hosting and domain", "Fast deployment and complete domain setup."],
-      ["Ongoing management", "Updates, backups, and maintenance when needed."],
-      ["Direct support", "You speak directly with me, without complicated ticketing."],
+      ["Professional development", "A fast foundation built for your business."],
+      ["Custom experience", "A visual system shaped around your identity."],
+      ["Management and backups", "Ongoing care without extra work from you."],
+      ["Fast hosting", "Reliable performance in Jordan and beyond."],
+      ["Security and updates", "Protection and maintenance throughout the year."],
+      ["Continuous support", "Direct help whenever you need it."],
     ],
     processTitle: "From a simple request to a working website.",
     processBody: "I need your idea and core content. From there, the technical details become my responsibility.",
@@ -220,4 +220,3 @@ export const copy = {
     footer: "Design, development, hosting, and management from Jordan.",
   },
 } as const;
-
