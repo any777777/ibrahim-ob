@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, MessageCircle } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { WHATSAPP_NUMBER, type Locale } from "@/data/portfolio";
 
 type SiteType = "landing" | "business" | "commerce" | "platform";
@@ -44,6 +44,33 @@ type EstimatorCopy = {
   options: Record<OptionKey, readonly [string, string]>;
 };
 
+type EstimateSelection = {
+  locale: Locale;
+  options: Record<OptionKey, boolean>;
+  pages: number;
+  siteType: SiteType;
+  text: EstimatorCopy;
+  totals: { oneTime: number; annual: number };
+};
+
+function calculateTotals(siteType: SiteType, pages: number, options: Record<OptionKey, boolean>) {
+  const extraPages = Math.max(0, pages - INCLUDED_PAGES[siteType]);
+  const oneTime = BASE_PRICES[siteType] + extraPages * 18 + (options.bilingual ? 30 : 0) + (options.motion ? 25 : 0);
+  const annual = (options.hosting ? EXTRA_PRICES.hosting : 0) + (options.management ? EXTRA_PRICES.management : 0);
+  return { oneTime, annual };
+}
+
+function createWhatsAppMessage({ locale, options, pages, siteType, text, totals }: EstimateSelection) {
+  const selectedExtras = (Object.keys(options) as OptionKey[])
+    .filter((key) => options[key])
+    .map((key) => text.options[key][0])
+    .join(locale === "ar" ? "، " : ", ");
+
+  return locale === "ar"
+    ? `مرحباً إبراهيم، أريد موقعاً من نوع: ${text.types[siteType][0]}. عدد الصفحات: ${pages}. الإضافات: ${selectedExtras || "لا توجد"}. التقدير الظاهر: ${totals.oneTime} د.أ للإنشاء${totals.annual ? ` و${totals.annual} د.أ سنوياً` : ""}. أريد مناقشة المشروع.`
+    : `Hi Ibrahim, I’m interested in a ${text.types[siteType][0]}. Pages: ${pages}. Extras: ${selectedExtras || "None"}. Displayed estimate: ${totals.oneTime} JOD to build${totals.annual ? ` and ${totals.annual} JOD annually` : ""}. I’d like to discuss the project.`;
+}
+
 export function PriceEstimator({ locale, text }: { locale: Locale; text: EstimatorCopy }) {
   const [siteType, setSiteType] = useState<SiteType>("landing");
   const [pages, setPages] = useState(1);
@@ -54,25 +81,11 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
     management: false,
   });
 
-  const totals = useMemo(() => {
-    const extraPages = Math.max(0, pages - INCLUDED_PAGES[siteType]);
-    const oneTime = BASE_PRICES[siteType] + extraPages * 18 + (options.bilingual ? 30 : 0) + (options.motion ? 25 : 0);
-    const annual = (options.hosting ? EXTRA_PRICES.hosting : 0) + (options.management ? EXTRA_PRICES.management : 0);
-    return { oneTime, annual };
-  }, [options, pages, siteType]);
+  const totals = calculateTotals(siteType, pages, options);
 
   const toggleOption = (key: OptionKey) => setOptions((current) => ({ ...current, [key]: !current[key] }));
 
-  const whatsappMessage = useMemo(() => {
-    const selectedExtras = (Object.keys(options) as OptionKey[])
-      .filter((key) => options[key])
-      .map((key) => text.options[key][0])
-      .join(locale === "ar" ? "، " : ", ");
-
-    return locale === "ar"
-      ? `مرحباً إبراهيم، أريد موقعاً من نوع: ${text.types[siteType][0]}. عدد الصفحات: ${pages}. الإضافات: ${selectedExtras || "لا توجد"}. التقدير الظاهر: ${totals.oneTime} د.أ للإنشاء${totals.annual ? ` و${totals.annual} د.أ سنوياً` : ""}. أريد مناقشة المشروع.`
-      : `Hi Ibrahim, I’m interested in a ${text.types[siteType][0]}. Pages: ${pages}. Extras: ${selectedExtras || "None"}. Displayed estimate: ${totals.oneTime} JOD to build${totals.annual ? ` and ${totals.annual} JOD annually` : ""}. I’d like to discuss the project.`;
-  }, [locale, options, pages, siteType, text, totals]);
+  const whatsappMessage = createWhatsAppMessage({ locale, options, pages, siteType, text, totals });
 
   return (
     <section id="pricing" className="estimator-section" aria-labelledby="estimator-heading">
@@ -110,7 +123,6 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
               max="12"
               value={pages}
               onChange={(event) => setPages(Number(event.target.value))}
-              style={{ "--range-progress": `${((pages - 1) / 11) * 100}%` } as React.CSSProperties}
             />
             <div className="range-edges"><span>1</span><span>12</span></div>
           </fieldset>
@@ -152,4 +164,3 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
     </section>
   );
 }
-
