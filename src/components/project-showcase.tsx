@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpLeft, ArrowUpRight } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import { projects, type Locale, type Project } from "@/data/portfolio";
 
@@ -41,10 +41,10 @@ export function ProjectShowcase({ locale, labels }: ProjectShowcaseProps) {
   const PreviousArrow = locale === "ar" ? ArrowRight : ArrowLeft;
   const NextArrow = locale === "ar" ? ArrowLeft : ArrowRight;
 
-  const ordered = useMemo(
-    () => showcaseProjects.map((_, offset) => ({ project: showcaseProjects[(selected + offset) % showcaseProjects.length], offset })),
-    [selected],
-  );
+  const ordered = showcaseProjects.map((_, offset) => ({
+    project: showcaseProjects[(selected + offset) % showcaseProjects.length],
+    offset,
+  }));
 
   const selectPrevious = () => setSelected((current) => (current - 1 + showcaseProjects.length) % showcaseProjects.length);
   const selectNext = () => setSelected((current) => (current + 1) % showcaseProjects.length);
@@ -55,6 +55,7 @@ export function ProjectShowcase({ locale, labels }: ProjectShowcaseProps) {
       <div className="project-stack" aria-label={labels.selectedWork}>
         {ordered.slice(0, 4).reverse().map(({ project, offset }) => {
           const stackPosition = 3 - offset;
+          const projectIndex = showcaseProjects.indexOf(project);
           const style = {
             "--stack-index": stackPosition,
             "--stack-offset": `${offset * 8.5}%`,
@@ -62,17 +63,33 @@ export function ProjectShowcase({ locale, labels }: ProjectShowcaseProps) {
             "--stack-opacity": 1 - offset * 0.18,
           } as CSSProperties;
 
+          if (offset === 0) {
+            return (
+              <a
+                key={project.slug}
+                className="project-sheet is-active"
+                style={style}
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${labels.visitProject}: ${project.title[locale]}`}
+                aria-current="true"
+              >
+                <ProjectPreview project={project} priority />
+              </a>
+            );
+          }
+
           return (
             <button
               key={project.slug}
               type="button"
-              className={`project-sheet ${offset === 0 ? "is-active" : ""}`}
+              className="project-sheet"
               style={style}
-              onClick={() => setSelected(showcaseProjects.indexOf(project))}
+              onClick={() => setSelected(projectIndex)}
               aria-label={`${labels.selectedWork}: ${project.title[locale]}`}
-              aria-pressed={offset === 0}
             >
-              <ProjectPreview project={project} priority={offset === 0} />
+              <ProjectPreview project={project} />
             </button>
           );
         })}
@@ -103,16 +120,17 @@ export function ProjectShowcase({ locale, labels }: ProjectShowcaseProps) {
 
       <div className="mobile-project-strip" aria-label={labels.selectedWork}>
         {showcaseProjects.map((project, index) => (
-          <button
+          <a
             key={project.slug}
-            type="button"
             className={index === selected ? "is-active" : ""}
-            onClick={() => setSelected(index)}
-            aria-pressed={index === selected}
+            href={project.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`${labels.visitProject}: ${project.title[locale]}`}
           >
-            <ProjectPreview project={project} />
+            <ProjectPreview project={project} priority={index === 0} />
             <span>{project.title[locale]}</span>
-          </button>
+          </a>
         ))}
       </div>
     </section>

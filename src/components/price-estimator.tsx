@@ -36,6 +36,15 @@ type EstimateSelection = {
   totals: { oneTime: number; annual: number };
 };
 
+function MoneyAmount({ currency, emphasized = false, locale, value }: { currency: string; emphasized?: boolean; locale: Locale; value: number | string }) {
+  return (
+    <bdi className={`money-inline ${locale === "ar" ? "money-inline--ar" : ""}`} dir="ltr">
+      {emphasized ? <strong className="money-value">{value}</strong> : <span className="money-value">{value}</span>}
+      <span className="money-unit">{currency}</span>
+    </bdi>
+  );
+}
+
 function calculateTotals(siteType: SiteType, pages: number, options: Record<OptionKey, boolean>) {
   const extraPages = Math.max(0, pages - INCLUDED_PAGES[siteType]);
   const oneTime = BASE_PRICES[siteType] + extraPages * 18 + (options.bilingual ? 30 : 0) + (options.motion ? 25 : 0);
@@ -65,6 +74,7 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
   });
 
   const totals = calculateTotals(siteType, pages, options);
+  const currencyLabel = locale === "ar" ? "دينار" : text.jod;
   const toggleOption = (key: OptionKey) => setOptions((current) => ({ ...current, [key]: !current[key] }));
   const setBilingual = (enabled: boolean) => setOptions((current) => ({ ...current, bilingual: enabled }));
   const whatsappMessage = createWhatsAppMessage({ locale, options, pages, siteType, text, totals });
@@ -75,7 +85,7 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
         <form className="estimator-form" onSubmit={(event) => event.preventDefault()}>
           <header className="estimator-heading">
             <h2 id="estimator-heading">{text.calculatorTitle}</h2>
-            <p>{text.from} <strong>79</strong> {text.jod}</p>
+            <p>{text.from}{" "}<MoneyAmount currency={currencyLabel} emphasized locale={locale} value={79} /></p>
           </header>
 
           <fieldset className="project-type-fieldset">
@@ -98,7 +108,7 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
                 <button type="button" onClick={() => setPages((current) => Math.max(1, current - 1))} aria-label={locale === "ar" ? "تقليل الصفحات" : "Decrease pages"}>
                   <Minus aria-hidden="true" weight="light" />
                 </button>
-                <output aria-live="polite">{pages}</output>
+                <output aria-live="polite"><bdi dir="ltr">{pages}</bdi></output>
                 <button type="button" onClick={() => setPages((current) => Math.min(12, current + 1))} aria-label={locale === "ar" ? "زيادة الصفحات" : "Increase pages"}>
                   <Plus aria-hidden="true" weight="light" />
                 </button>
@@ -127,7 +137,7 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
                 <label key={key} className={options[key] ? "is-selected" : ""}>
                   <input type="checkbox" checked={options[key]} onChange={() => toggleOption(key)} />
                   <span>{text.options[key][0]}</span>
-                  <b>+{EXTRA_PRICES[key]} {text.jod}</b>
+                  <b><MoneyAmount currency={currencyLabel} locale={locale} value={`+${EXTRA_PRICES[key]}`} /></b>
                   <i>{options[key] && <CheckCircle aria-hidden="true" weight="fill" />}</i>
                 </label>
               ))}
@@ -137,9 +147,9 @@ export function PriceEstimator({ locale, text }: { locale: Locale; text: Estimat
 
         <aside className="estimate-summary" aria-live="polite">
           <p>{text.oneTime}</p>
-          <div className="price"><strong>{totals.oneTime}</strong><span>{text.jod}</span></div>
-          <small>{text.from} {BASE_PRICES[siteType]} {text.jod}</small>
-          <div className="annual-price"><span>{text.annual}</span><strong>{totals.annual} {text.jod}</strong></div>
+          <div className="price"><MoneyAmount currency={currencyLabel} emphasized locale={locale} value={totals.oneTime} /></div>
+          <small>{text.from}{" "}<MoneyAmount currency={currencyLabel} locale={locale} value={BASE_PRICES[siteType]} /></small>
+          <div className="annual-price"><span>{text.annual}</span><strong><MoneyAmount currency={currencyLabel} locale={locale} value={totals.annual} /></strong></div>
           <p className="price-note">{text.priceNote}</p>
           <a className="estimate-cta" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noreferrer">
             <WhatsappLogo aria-hidden="true" weight="regular" />
