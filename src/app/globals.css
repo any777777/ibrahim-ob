@@ -729,6 +729,43 @@ p {
   margin-block-start: 1.4rem !important;
 }
 
+.currency-fieldset {
+  margin-block-start: 1.25rem !important;
+}
+
+.currency-options {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+}
+
+.currency-options button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.45rem;
+  color: var(--mineral-muted);
+  border: 1px solid var(--line);
+  border-inline-start: 0;
+  background: transparent;
+  font-family: var(--font-english-display);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.currency-options button:first-child {
+  border-inline-start: 1px solid var(--line);
+}
+
+.currency-options button.is-selected {
+  color: var(--mineral-white);
+  border-color: var(--patina);
+  background: rgba(76, 159, 151, 0.12);
+}
+
 .segmented-options,
 .binary-options {
   display: flex;
@@ -772,6 +809,7 @@ p {
 
 .segmented-options svg,
 .binary-options svg,
+.currency-options svg,
 .compact-extras svg {
   width: 0.9rem;
   height: 0.9rem;
@@ -884,6 +922,10 @@ p {
 .compact-extras label.is-selected {
   color: var(--mineral-white);
   border-color: var(--patina);
+}
+
+.compact-extras label.is-required {
+  cursor: default;
 }
 
 .compact-extras label > span {
